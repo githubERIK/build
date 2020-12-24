@@ -1,7 +1,15 @@
 ---
 name: CI
 
-on: [push]
+on:
+  workflow_dispatch:
+    inputs:
+      repository:
+        description: "repository to build"
+        required: true
+      ref:
+        description: "branch, tag or SHA to checkout"
+        required: true
 
 jobs:
   build:
@@ -13,8 +21,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          repository: ${{ secrets.REPOSITORY }}
-          ref: main
+          repository: ${{ github.event.inputs.repository }}
+          ref: ${{ github.event.inputs.ref }
           token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: use python ${{ matrix.python-version }}
