@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: ${{ github.event.inputs.repository }}
-          ref: ${{ github.event.inputs.ref }
+          ref: ${{ github.event.inputs.ref }}
           token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: use python ${{ matrix.python-version }}
