@@ -32,6 +32,6 @@ jobs:
 
       - name: push image
         run: |
-          echo "${{ secrets.REGISTRY_PASSWORD }}" docker login "${{ secrets.REGISTRY_URL }}" -u "${{ secrets.REGISTRY_USERNAME }}" --password-stdin
+          echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login "${{ secrets.REGISTRY_URL }}" -u "${{ secrets.REGISTRY_USERNAME }}" --password-stdin
           make docker_push
           docker logout "${{ secrets.REGISTRY_URL }}"
