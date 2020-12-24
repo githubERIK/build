@@ -19,10 +19,15 @@ jobs:
         python-version: [3.9]
 
     steps:
-      - name: Test printing secret
-        run: echo ${{ secrets.REPOSITORY }}
+      - name: login to registry
+        run: >
+          echo "${{ secrets.REGISTRY_PASSWORD }}"
+          docker login "${{ secrets.REGISTRY_URL }}"
+          -u "${{ secrets.REGISTRY_USERNAME }}"
+          --password-stdin
 
-      - uses: actions/checkout@v2
+      - name: checkout repository
+        uses: actions/checkout@v2
         with:
           repository: ${{ github.event.inputs.repository }}
           ref: ${{ github.event.inputs.ref }}
@@ -40,3 +45,7 @@ jobs:
       - name: lint
         run: |
           black *.py --check
+
+      - name: build image
+        run: |
+          make docker
