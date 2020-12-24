@@ -19,6 +19,9 @@ jobs:
         python-version: [3.9]
 
     steps:
+      - name: Test printing secret
+        run: echo ${{ secrets.REPOSITORY }}
+
       - uses: actions/checkout@v2
         with:
           repository: ${{ github.event.inputs.repository }}
