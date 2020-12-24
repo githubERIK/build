@@ -33,19 +33,14 @@ jobs:
           ref: ${{ github.event.inputs.ref }}
           token: ${{ secrets.ACCESS_TOKEN }}
 
-      - name: use python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: install
-        run: |
-          pip install black
-
-      - name: lint
-        run: |
-          black *.py --check
-
       - name: build image
         run: |
           make docker
+
+      - name: push image
+        run: |
+          make docker_push
+
+      - name: logout of registry
+        run: |
+          make docker_push
